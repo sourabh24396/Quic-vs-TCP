@@ -1,5 +1,3 @@
-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -9,8 +7,6 @@ import numpy as np
 quic_data=pd.read_csv('C:\\Users\\HP\\OneDrive\\Desktop\\QUIC_GRAPHS\\processed\\quic_data.csv')
 tcp_data=pd.read_csv('C:\\Users\\HP\\OneDrive\\Desktop\\QUIC_GRAPHS\\processed\\tcp_data.csv')
 tcp_data.head()
-
-
 
 
 initial_time=quic_data['In_time']
@@ -29,11 +25,8 @@ plt.plot(x_axis,y_axis_tcp,label="TCP",marker='x')
 plt.plot(x_axis,y_axis_quic,label="QUIC",marker='.')
 plt.legend()
 plt.title('Throughput comparison: Bandwidth 100 Mbps')
+
 plt.show()
-
-
-
-
 
 x_axis=[100]
 
@@ -50,7 +43,6 @@ for i in y_axis_quic:
     sum_quic+=i
 sum_quic=-1*sum_quic
 avg_quic=sum_quic/len(y_axis_quic)
-
 
 
 f = plt.figure()
