@@ -33,7 +33,6 @@ netemCommandDelete = "sudo tc qdisc del dev lo root"
 netemCommandShow = "sudo tc qdisc show dev lo"
 netemCommandRoot = "sudo tc qdisc add dev lo root handle 1: netem "
 netemCommandLatencyAddendum = " delay xxxms"
-netemCommandLatencyVarianceAddendum = " xxxms distribution normal"
 netemCommandPacketLossAddendum = " loss xxx%"
 netemCommandBandwidth = "sudo tc qdisc add dev lo parent 1: handle 2: tbf rate xxxmbit burst 256kbit latency 1000ms mtu 1500"
 
@@ -68,8 +67,6 @@ def main():
 		0, 51)], help="Packet loss as the probability an individual packet will be dropped", default="0")
 	parser.add_argument("-d", "--delay", nargs="+", type=int,
 						choices=range(10, 126), help="Mean delay (in ms)", default="10")
-	parser.add_argument("-v", "--variance", nargs="+", type=int,
-						choices=range(0, 51), help="Delay variance (in ms)", default="0")
 	parser.add_argument("-b", "--bandwidth", nargs="+", type=int,
 						choices=range(1, 101), help="Bandwidth (in Mbps)", default="100")
 	parser.add_argument("-s", "--spikedelay", nargs="+", type=int, choices=range(0, 31),
@@ -185,7 +182,6 @@ def main():
 		ret += "_" + str(params.bandwidth)
 		ret += "_" + str(params.packetloss)
 		ret += "_" + str(params.delay)
-		ret += "_" + str(params.variance)
 		if params.spikedelay > 0:
 			ret += "_" + str(params.relspikestart)
 		else:
@@ -234,7 +230,7 @@ def main():
 		params = paramsQueue.pop()
 
 		if args.verbose:
-			print "Running tests for: protocol=" + str(params.protocol) + ", packetloss=" + str(params.packetloss) + ", delay=" + str(params.delay) + ", variance=" + str(params.variance) + ", bandwidth=" + str(params.bandwidth) + ", spikedelay=" + str(params.spikedelay) + "."
+			print "Running tests for: protocol=" + str(params.protocol) + ", packetloss=" + str(params.packetloss) + ", delay=" + str(params.delay) + ", bandwidth=" + str(params.bandwidth) + ", spikedelay=" + str(params.spikedelay) + "."
 
 		# configure netem
 		netemConfig(params)
